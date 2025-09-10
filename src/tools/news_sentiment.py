@@ -131,6 +131,25 @@ class FinnhubNewsTool(NewsTool):
         else:
             return "NEUTRAL"
 
+    async def execute(self, **kwargs) -> str:
+        """Execute the Finnhub news tool with flexible parameters."""
+        try:
+            # Default parameters
+            ticker = kwargs.get('ticker', 'AAPL')
+            start_date = kwargs.get('start_date', '2024-01-01')
+            end_date = kwargs.get('end_date', '2024-12-31')
+            news_type = kwargs.get('news_type', 'company')  # 'company' or 'macro'
+
+            if news_type == 'macro':
+                trade_date = kwargs.get('trade_date', end_date)
+                return await self.get_macro_news(trade_date)
+            else:
+                return await self.get_company_news(ticker, start_date, end_date)
+
+        except Exception as e:
+            self.log_execution(False)
+            raise APIError(f"Finnhub news tool execution failed: {e}", "finnhub")
+
 
 class TavilySentimentTool(SentimentTool):
     """Tavily-based sentiment analysis tool."""
@@ -228,6 +247,16 @@ class TavilySentimentTool(SentimentTool):
         else:
             return "NEUTRAL"
 
+    async def execute(self, **kwargs) -> str:
+        """Execute the Tavily sentiment tool."""
+        try:
+            ticker = kwargs.get('ticker', 'AAPL')
+            trade_date = kwargs.get('trade_date', '2024-01-01')
+            return await self.get_social_sentiment(ticker, trade_date)
+        except Exception as e:
+            self.log_execution(False)
+            raise APIError(f"Tavily sentiment tool execution failed: {e}", "tavily")
+
 
 class TavilyFundamentalsTool(FundamentalsTool):
     """Tavily-based fundamental analysis tool."""
@@ -290,6 +319,16 @@ class TavilyFundamentalsTool(FundamentalsTool):
         except Exception as e:
             self.log_execution(False)
             raise APIError(f"Error fetching fundamental analysis: {e}", "tavily")
+
+    async def execute(self, **kwargs) -> str:
+        """Execute the Tavily fundamentals tool."""
+        try:
+            ticker = kwargs.get('ticker', 'AAPL')
+            trade_date = kwargs.get('trade_date', '2024-01-01')
+            return await self.get_fundamental_analysis(ticker, trade_date)
+        except Exception as e:
+            self.log_execution(False)
+            raise APIError(f"Tavily fundamentals tool execution failed: {e}", "tavily")
 
 
 class NewsAndSentimentAggregator:

@@ -84,6 +84,24 @@ class YFinanceDataTool(MarketDataTool):
             self.logger.error(f"Error fetching company info for {symbol}: {e}")
             return {}
 
+    async def execute(self, **kwargs) -> str:
+        """Execute the Yahoo Finance data tool with flexible parameters."""
+        try:
+            symbol = kwargs.get('symbol', 'AAPL')
+            start_date = kwargs.get('start_date', '2024-01-01')
+            end_date = kwargs.get('end_date', '2024-12-31')
+            data_type = kwargs.get('data_type', 'stock_data')  # 'stock_data' or 'company_info'
+
+            if data_type == 'company_info':
+                info = await self.get_company_info(symbol)
+                return str(info)  # Convert dict to string
+            else:
+                return await self.get_stock_data(symbol, start_date, end_date)
+
+        except Exception as e:
+            self.log_execution(False)
+            raise APIError(f"YFinance data tool execution failed: {e}", "yfinance")
+
 
 class TechnicalIndicatorCalculator(TechnicalIndicatorTool):
     """Calculate technical indicators using stockstats."""
@@ -227,6 +245,24 @@ class TechnicalIndicatorCalculator(TechnicalIndicatorTool):
         except Exception as e:
             self.logger.error(f"Error generating signal summary: {e}")
             return {"error": str(e)}
+
+    async def execute(self, **kwargs) -> str:
+        """Execute the technical indicators tool."""
+        try:
+            symbol = kwargs.get('symbol', 'AAPL')
+            start_date = kwargs.get('start_date', '2024-01-01')
+            end_date = kwargs.get('end_date', '2024-12-31')
+            operation = kwargs.get('operation', 'indicators')  # 'indicators' or 'signals'
+
+            if operation == 'signals':
+                signals = await self.get_signal_summary(symbol, start_date, end_date)
+                return str(signals)  # Convert dict to string
+            else:
+                return await self.get_technical_indicators(symbol, start_date, end_date)
+
+        except Exception as e:
+            self.log_execution(False)
+            raise APIError(f"Technical indicators tool execution failed: {e}", "technical")
 
 
 class MarketDataAggregator:
