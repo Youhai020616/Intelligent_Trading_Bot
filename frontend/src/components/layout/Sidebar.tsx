@@ -1,5 +1,5 @@
-import React from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Drawer,
   List,
@@ -10,50 +10,49 @@ import {
   Divider,
   Box,
   Typography,
-  Chip,
   useTheme,
-} from '@mui/material'
+} from "@mui/material";
 import {
   Dashboard as DashboardIcon,
   Analytics as AnalyticsIcon,
   SmartToy as SmartToyIcon,
   History as HistoryIcon,
   Settings as SettingsIcon,
-} from '@mui/icons-material'
+} from "@mui/icons-material";
 
 interface SidebarProps {
-  open: boolean
+  open: boolean;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ open }) => {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const theme = useTheme()
+  const navigate = useNavigate();
+  const location = useLocation();
+  const theme = useTheme();
 
   const menuItems = [
     {
-      text: '仪表板',
+      text: "仪表板",
       icon: <DashboardIcon />,
-      path: '/',
+      path: "/",
     },
     {
-      text: '交易分析',
+      text: "交易分析",
       icon: <AnalyticsIcon />,
-      path: '/analysis',
+      path: "/analysis",
     },
     {
-      text: '智能体监控',
+      text: "智能体监控",
       icon: <SmartToyIcon />,
-      path: '/agents',
+      path: "/agents",
     },
     {
-      text: '决策历史',
+      text: "决策历史",
       icon: <HistoryIcon />,
-      path: '/history',
+      path: "/history",
     },
-  ]
+  ];
 
-  const drawerWidth = open ? 280 : 80
+  const drawerWidth = open ? 280 : 80;
 
   return (
     <Drawer
@@ -61,12 +60,12 @@ const Sidebar: React.FC<SidebarProps> = ({ open }) => {
       sx={{
         width: drawerWidth,
         flexShrink: 0,
-        '& .MuiDrawer-paper': {
+        "& .MuiDrawer-paper": {
           width: drawerWidth,
-          boxSizing: 'border-box',
+          boxSizing: "border-box",
           backgroundColor: theme.palette.background.paper,
           borderRight: `1px solid ${theme.palette.divider}`,
-          transition: 'width 0.3s ease',
+          transition: "width 0.3s ease",
         },
       }}
     >
@@ -76,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open }) => {
             🤖 智能交易系统
           </Typography>
         ) : (
-          <Typography variant="h6" sx={{ textAlign: 'center' }}>
+          <Typography variant="h6" sx={{ textAlign: "center" }}>
             🤖
           </Typography>
         )}
@@ -84,17 +83,19 @@ const Sidebar: React.FC<SidebarProps> = ({ open }) => {
 
       <List sx={{ pt: 1 }}>
         {menuItems.map((item) => {
-          const isActive = location.pathname === item.path
+          const isActive = location.pathname === item.path;
           return (
             <ListItem key={item.text} disablePadding>
               <ListItemButton
                 onClick={() => navigate(item.path)}
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
+                  justifyContent: open ? "initial" : "center",
                   px: 2.5,
-                  backgroundColor: isActive ? theme.palette.action.selected : 'transparent',
-                  '&:hover': {
+                  backgroundColor: isActive
+                    ? theme.palette.action.selected
+                    : "transparent",
+                  "&:hover": {
                     backgroundColor: theme.palette.action.hover,
                   },
                 }}
@@ -102,9 +103,11 @@ const Sidebar: React.FC<SidebarProps> = ({ open }) => {
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                    color: isActive ? theme.palette.primary.main : theme.palette.text.secondary,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                    color: isActive
+                      ? theme.palette.primary.main
+                      : theme.palette.text.secondary,
                   }}
                 >
                   {item.icon}
@@ -113,8 +116,10 @@ const Sidebar: React.FC<SidebarProps> = ({ open }) => {
                   <ListItemText
                     primary={item.text}
                     sx={{
-                      color: isActive ? theme.palette.primary.main : theme.palette.text.primary,
-                      '& .MuiTypography-root': {
+                      color: isActive
+                        ? theme.palette.primary.main
+                        : theme.palette.text.primary,
+                      "& .MuiTypography-root": {
                         fontWeight: isActive ? 600 : 400,
                       },
                     }}
@@ -122,25 +127,25 @@ const Sidebar: React.FC<SidebarProps> = ({ open }) => {
                 )}
               </ListItemButton>
             </ListItem>
-          )
+          );
         })}
       </List>
 
-      <Divider sx={{ mt: 'auto' }} />
+      <Divider sx={{ mt: "auto" }} />
 
       <Box sx={{ p: 2 }}>
         <ListItemButton
           sx={{
             minHeight: 48,
-            justifyContent: open ? 'initial' : 'center',
+            justifyContent: open ? "initial" : "center",
             px: 2.5,
           }}
         >
           <ListItemIcon
             sx={{
               minWidth: 0,
-              mr: open ? 3 : 'auto',
-              justifyContent: 'center',
+              mr: open ? 3 : "auto",
+              justifyContent: "center",
             }}
           >
             <SettingsIcon />
@@ -149,7 +154,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open }) => {
         </ListItemButton>
       </Box>
     </Drawer>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
