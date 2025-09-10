@@ -2,6 +2,22 @@
 
 A sophisticated multi-agent quantitative trading system built with LangGraph, featuring collaborative AI agents that simulate a real investment firm's decision-making process.
 
+## 📋 Latest Updates
+
+**Current Branch:** `feature/supabase-langgraph-integration`
+
+This branch includes the latest features:
+- ✅ Supabase PostgreSQL database integration
+- ✅ Complete LangGraph workflow system
+- ✅ Interactive user interface
+- ✅ Comprehensive error handling
+- ✅ Secure API key management
+
+To use the latest features:
+```bash
+git checkout feature/supabase-langgraph-integration
+```
+
 ## 🌟 Features
 
 - **Multi-Agent Architecture**: Specialized agents for market analysis, research, trading, and risk management
