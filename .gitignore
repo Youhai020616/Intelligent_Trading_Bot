@@ -79,3 +79,7 @@ docs/_build/
 
 # Node modules (if any)
 node_modules/
+
+# Frontend build artifacts
+frontend/dist/
+frontend/.vite/
